@@ -89,7 +89,6 @@ function main(){
 				});
 				main();
 			})
-			connection.query("UPDATE items SET stock_quantity= stock_quantity-?  WHERE id=?",[answers.quantity, answers.id]);
 			break;
 		}
 	});
