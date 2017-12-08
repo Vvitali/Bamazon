@@ -19,13 +19,7 @@ connection.connect();
 
 connection.query('SELECT * FROM `items`', function (error, results) {
 	if (error) throw error;
-	// itemsList = results;
-	// for (var i in results){
-	// 	table.push(
-	// 		[results[i].id, results[i].product_name, results[i].department_name, results[i].price, results[i].stock_quantity]
-	// 		);
-	// }
-	// console.log(table.toString());
+
 	inquirer.prompt([
 	{
 		name: "id",
@@ -36,9 +30,17 @@ connection.query('SELECT * FROM `items`', function (error, results) {
 	}
 	]).then((answer) => {	
 		if(answer.id){
-			connection.query("SELECT items.department_name, departments.department_name, departments.over_head_costs, items.product_sales FROM departments INNER JOIN items ON items.department_name=departments.department_name",function(error, results){
+			connection.query("SELECT items.department_name, departments.department_name, departments.over_head_costs, items.product_sales, departments.department_id FROM departments LEFT JOIN items ON departments.department_name=items.department_name",function(error, results){
 				error && console.log(error);
-				console.log(results);
+
+				itemsList = results;
+				for (var i in results){
+					table.push(
+						[results[i].department_id, results[i].department_name, results[i].over_head_costs, results[i].price, results[i].stock_quantity]
+						);
+				}
+				console.log(table.toString());
+
 				connection.end();
 			}); 
 		}else{
