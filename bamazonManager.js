@@ -42,13 +42,54 @@ function main(){
 		,{name: "Add New Product", value: "newProduct"}
 		]
 	}
-	]).then((answers) => {
+	]).then(answers => {
 		switch(answers.id){
 			case "products":
 			connection.query('SELECT * FROM `items`', displayProducts);
 			break;
 			case "low":
 			connection.query('SELECT * FROM `items` WHERE stock_quantity<3 ', displayProducts);
+			break;
+			case "invetory":
+			inquirer.prompt([
+			{
+				name: "inv",
+				type: "list",
+				message: "Select item to add",
+				choices:  function(){
+					return new Promise(
+						function(resolve, reject){
+							var array = [];
+							connection.query('SELECT * FROM `items`', function(error, results){
+								error && console.log("errrrr: "+error);
+								for (var i in results){
+									array.push({name: results[i].product_name, value:  results[i].id });
+								}
+								DEBUG && console.log(array);
+								resolve(array); 
+							});
+						})
+				}				
+			},
+			{
+				name: "quantity",
+				type: "input",
+				message: "How many items do you want to add?",
+				validate: (answer)=>{
+					if(isNaN(answer)){
+						return "Type just a number, please!"; 	
+					}else return true;
+				}
+
+			}
+			]).then(answers=>{
+				connection.query("UPDATE items SET stock_quantity= stock_quantity+?  WHERE id=?",[answers.quantity, answers.inv],function(error, results){
+					error && console.log(error);
+					connection.end();
+				});
+				main();
+			})
+			connection.query("UPDATE items SET stock_quantity= stock_quantity-?  WHERE id=?",[answers.quantity, answers.id]);
 			break;
 		}
 	});
