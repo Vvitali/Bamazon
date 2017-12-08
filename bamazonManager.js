@@ -80,13 +80,49 @@ function main(){
 						return "Type just a number, please!"; 	
 					}else return true;
 				}
-
 			}
 			]).then(answers=>{
 				connection.query("UPDATE items SET stock_quantity= stock_quantity+?  WHERE id=?",[answers.quantity, answers.inv],function(error, results){
 					error && console.log(error);
-					connection.end();
 				});
+				main();
+			})
+			break;
+			case "newProduct":
+			inquirer.prompt([
+			{
+				name: "name",
+				type: "input",
+				message: "Type an item's name what you want to ADD:"
+			},
+			{
+				name: "department",
+				type: "input",
+				message: "Type an item's department:"
+			},
+			{
+				name: "price",
+				type: "input",
+				message: "Type an item's price:",
+				validate: (answer)=>{
+					if(isNaN(answer)){
+						return "Type just a number, please!"; 	
+					}else return true;
+				}
+			},
+			{
+				name: "quantity",
+				type: "input",
+				message: "How many items do you want to add?",
+				validate: (answer)=>{
+					if(isNaN(answer)){
+						return "Type just a number, please!"; 	
+					}else return true;
+				}
+			}
+			]).then(answers=>{
+				console.log("Added!");
+				connection.query('INSERT into items (product_name, department_name, price,stock_quantity)values (?, ?, ?,?)', [answers.name,answers.department,answers.price,answers.quantity]);
 				main();
 			})
 			break;
