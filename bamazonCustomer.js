@@ -62,7 +62,7 @@ connection.query('SELECT * FROM `items`', function (error, results) {
 		}
 	}
 	]).then((answers) => {
-		connection.query("UPDATE items SET stock_quantity= stock_quantity-?  WHERE id=?",[answers.quantity, answers.id],function(error, results){
+		connection.query("UPDATE items SET stock_quantity= stock_quantity-?, product_sales= product_sales+? WHERE id=?",[answers.quantity,(itemsList[answers.id-1].price * answers.quantity), answers.id],function(error, results){
 			error && console.log(error);
 			connection.end();
 		});
