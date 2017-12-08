@@ -122,7 +122,7 @@ function main(){
 			}
 			]).then(answers=>{
 				console.log("Added!");
-				connection.query('INSERT into items (product_name, department_name, price,stock_quantity)values (?, ?, ?,?)', [answers.name,answers.department,answers.price,answers.quantity]);
+				connection.query('INSERT into items (product_name, department_name, price,stock_quantity, product_sales)values (?, ?, ?,?,?)', [answers.name,answers.department,answers.price,answers.quantity, 0]);
 				main();
 			})
 			break;
