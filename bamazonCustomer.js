@@ -7,6 +7,7 @@ var table = new Table({
 	head: ['ID', 'Item', "Department", "Price", "Stock quantity"]
 });
 var itemsList;
+var currentId=0;
 var connection = mysql.createConnection({
 	host     : 'localhost',
 	user     : 'root',
@@ -33,9 +34,16 @@ connection.query('SELECT * FROM `items`', function (error, results) {
 		validate: (answer)=>{
 			if(isNaN(answer)){
 				return "Type just a number, please!"; 	
-			}else return true;
-		}
+			}else {
+				if((+answer) <= itemsList.length &&(+answer) >0){
+					currentId = +answer;
+					return true;
 
+				}else{
+					return "There is no such ID";
+				}
+			}
+		}
 	},
 	{
 		name: "quantity",
@@ -44,14 +52,24 @@ connection.query('SELECT * FROM `items`', function (error, results) {
 		validate: (answer)=>{
 			if(isNaN(answer)){
 				return "Type just a number, please!"; 	
-			}else return true;
+			}else{
+				if( itemsList[currentId-1].stock_quantity >= (+answer)){
+					return true;
+				}else{
+					return "Excuse me, not enough items in stock.";
+				}
+			}
 		}
 	}
-	]).then(answers => {
-    // Use user feedback for... whatever!!
+	]).then((answers) => {
+		connection.query("UPDATE items SET stock_quantity= stock_quantity-?  WHERE id=?",[answers.quantity, answers.id],function(error, results){
+			error && console.log(error);
+			
+			connection.end();
+		});
+		console.log("Thank you for using our service! Total cost:" + itemsList[answers.id-1].price * answers.quantity);
+
+	});
 });
-});
 
 
-
-connection.end();
