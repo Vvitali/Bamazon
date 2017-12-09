@@ -1,4 +1,4 @@
-var DEBUG = true;
+var DEBUG = false;
 DEBUG && console.log("Bamazon Supervisor starts");
 var inquirer = require('inquirer');
 var mysql = require("mysql");
