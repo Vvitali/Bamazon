@@ -19,11 +19,11 @@ CREATE TABLE departments(
 	PRIMARY KEY (department_id)
 	);
 
-INSERT into departments (department_name, over_head_costs)values ("auto", 3000);
-INSERT into departments (department_name, over_head_costs)values ("BOOKS", 250);
+INSERT into departments (department_name, over_head_costs)values ("Auto", 3000);
+INSERT into departments (department_name, over_head_costs)values ("Books", 250);
 
-INSERT into items (product_name, department_name, price,stock_quantity, product_sales)values ("BMW", "auto",7000,2,0);
-INSERT into items (product_name, department_name, price,stock_quantity, product_sales)values ("AUDI", "auto",70,1,0);
-INSERT into items (product_name, department_name, price,stock_quantity, product_sales)values ("MERSEDES-BENZ", "auto",70,4,0);
-INSERT into items (product_name, department_name, price,stock_quantity, product_sales)values ("TOYOTA", "auto", 30,3, 0);
-INSERT into items (product_name, department_name, price,stock_quantity, product_sales)values ("C for beginers", "BOOKS",7,2,0);
+INSERT into items (product_name, department_name, price,stock_quantity, product_sales)values ("BMW", "Auto",7000,2,0);
+INSERT into items (product_name, department_name, price,stock_quantity, product_sales)values ("AUDI", "Auto",70,1,0);
+INSERT into items (product_name, department_name, price,stock_quantity, product_sales)values ("MERSEDES-BENZ", "Auto",70,4,0);
+INSERT into items (product_name, department_name, price,stock_quantity, product_sales)values ("TOYOTA", "Auto", 30,3, 0);
+INSERT into items (product_name, department_name, price,stock_quantity, product_sales)values ("C for beginers", "Books",7,2,0);
