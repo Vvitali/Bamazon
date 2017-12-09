@@ -1,4 +1,4 @@
-var DEBUG = true;
+var DEBUG = false;
 DEBUG && console.log("Bamazon Customer starts");
 var inquirer = require('inquirer');
 var mysql = require("mysql");
